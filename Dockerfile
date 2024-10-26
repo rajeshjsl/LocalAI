@@ -320,7 +320,7 @@ COPY --from=grpc /opt/grpc /usr/local
 WORKDIR /build
 
 COPY . .
-COPY .git .
+# COPY .git .
 
 RUN make prepare
 
