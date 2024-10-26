@@ -463,7 +463,7 @@ RUN if [[ ( "${EXTRA_BACKENDS}" =~ "vall-e-x" || -z "${EXTRA_BACKENDS}" ) && "$I
         make -C backend/python/transformers \
     ; fi
 
-RUN if [[ ( "${EXTRA_BACKENDS}" =~ "vllm" || -z "${EXTRA_BACKENDS}" ) && "$IMAGE_TYPE" == "extras" ]]; then \
+RUN if [[ ( "${EXTRA_BACKENDS}" =~ "vllm" || -z "${EXTRA_BACKENDS}" ) && "$IMAGE_TYPE" == "extras" && "$TARGETARCH" != "arm64" ]]; then \
         make -C backend/python/vllm \
     ; fi && \
     if [[ ( "${EXTRA_BACKENDS}" =~ "autogptq" || -z "${EXTRA_BACKENDS}" ) && "$IMAGE_TYPE" == "extras" ]]; then \
