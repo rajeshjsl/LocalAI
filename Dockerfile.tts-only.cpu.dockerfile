@@ -33,8 +33,11 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Install Go
-RUN curl -L -s https://go.dev/dl/go${GO_VERSION}.linux-${TARGETARCH}.tar.gz | tar -C /usr/local -xz
+# Install Go - explicitly for arm64
+RUN curl -L -s https://go.dev/dl/go1.22.6.linux-arm64.tar.gz -o go.tar.gz && \
+    tar -C /usr/local -xzf go.tar.gz && \
+    rm go.tar.gz
+
 ENV PATH=$PATH:/root/go/bin:/usr/local/go/bin
 
 # Install grpc compilers
