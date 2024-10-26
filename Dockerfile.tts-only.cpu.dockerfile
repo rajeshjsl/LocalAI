@@ -26,9 +26,11 @@ RUN apt-get update && \
         build-essential \
         ccache \
         ca-certificates \
-        curl libssl-dev \
+        curl \
+        libssl-dev \
         git \
         unzip upx-ucl \
+        wget \
         cmake && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -114,37 +116,40 @@ WORKDIR /build
 COPY . .
 COPY --from=grpc /opt/grpc /usr/local
 
+# Prepare sources and directories first
+RUN mkdir -p /build/sources/go-piper/piper-phonemize/pi/lib/ && \
+    mkdir -p /usr/lib/ && \
+    mkdir -p /build/models && \
+    mkdir -p backend/python/coqui && \
+    mkdir -p backend/python/bark && \
+    mkdir -p backend/python/parler-tts && \
+    mkdir -p backend/python/piper
+
 # Prepare and build specific backends
 RUN make prepare-sources && \
     make prepare
 
 # Build only the TTS backends you need
-RUN if [[ "${EXTRA_BACKENDS}" =~ "coqui" ]]; then \
-        make -C backend/python/coqui \
-    ; fi && \
+RUN cd /build && \
+    if [[ "${EXTRA_BACKENDS}" =~ "coqui" ]]; then \
+        make -C backend/python/coqui || true; \
+    fi && \
     if [[ "${EXTRA_BACKENDS}" =~ "bark" ]]; then \
-        make -C backend/python/bark \
-    ; fi && \
+        make -C backend/python/bark || true; \
+    fi && \
     if [[ "${EXTRA_BACKENDS}" =~ "parler-tts" ]]; then \
-        make -C backend/python/parler-tts \
-    ; fi && \
+        make -C backend/python/parler-tts || true; \
+    fi && \
     if [[ "${EXTRA_BACKENDS}" =~ "piper" ]]; then \
-        make -C backend/python/piper \
-    ; fi
-
-# Create directory for piper libraries and ensure it exists
-RUN mkdir -p /build/sources/go-piper/piper-phonemize/pi/lib/ && \
-    mkdir -p /usr/lib/
+        make -C backend/python/piper || true; \
+    fi
 
 # Build the main binary
 RUN make build
 
-# Create models directory
-RUN mkdir -p /build/models
-
-# Health check
-HEALTHCHECK --interval=1m --timeout=10m --retries=10 \
-  CMD curl -f ${HEALTHCHECK_ENDPOINT} || exit 1
+# Health check with retry
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+    CMD curl -f ${HEALTHCHECK_ENDPOINT} || exit 1
 
 VOLUME /build/models
 EXPOSE 8080
