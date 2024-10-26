@@ -1,0 +1,6 @@
+EXTRA_BACKENDS=coqui bark parler-tts piper
+IMAGE_TYPE=extras
+BUILD_TYPE=cpu
+FFMPEG=true
+TARGETARCH=arm64
+MAKEFLAGS=-j1
