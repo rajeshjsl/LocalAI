@@ -129,11 +129,9 @@ RUN if [[ "${EXTRA_BACKENDS}" =~ "coqui" ]]; then \
         make -C backend/python/piper \
     ; fi
 
-# Create directory for piper libraries
-RUN mkdir -p /build/sources/go-piper/piper-phonemize/pi/lib/
-
-# Copy shared libraries for piper
-COPY --from=builder /build/sources/go-piper/piper-phonemize/pi/lib/* /usr/lib/ || true
+# Create directory for piper libraries and ensure it exists
+RUN mkdir -p /build/sources/go-piper/piper-phonemize/pi/lib/ && \
+    mkdir -p /usr/lib/
 
 # Build the main binary
 RUN make build
