@@ -1,0 +1,9 @@
+Model      | Speed   | Quality | Voice Cloning | Resource Usage | Use Case
+-----------|---------|---------|---------------|----------------|----------
+VITS       | Fast    | Good    | Limited      | Low           | Production
+Bark       | Medium  | Good    | Yes          | High          | Creative
+Tortoise   | Slow    | Best    | Excellent    | Very High     | Quality
+XTTS2      | Medium  | V.Good  | Excellent    | Medium        | All-round
+YourTTS    | Medium  | Good    | Good         | Medium        | Adaptation
+Piper      | V.Fast  | Fair    | Limited      | Very Low      | Edge/IoT
+ParlerTTS  | Fast    | Good    | Limited      | Low           | Long-form
