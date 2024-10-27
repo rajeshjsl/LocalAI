@@ -1,0 +1,16 @@
+use modified Dockerfile without healthcheck stuff, otherwise coolify fails it despite build being successful (no time to resolve this - resolve later)
+
+success build via build env variables
+CMAKE_ARGS
+"-DGGML_F16C=OFF -DGGML_AVX512=OFF -DGGML_AVX2=OFF -DGGML_AVX=OFF -DGGML_FMA=OFF"
+
+FFMPEG
+true
+
+but size is huge. piper tts works, whisper stt works
+
+
+testing additonal build environment variables for image size and functionality
+
+BUILD_TYPE
+openblas
