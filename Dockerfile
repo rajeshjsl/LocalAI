@@ -389,7 +389,7 @@ ARG MAKEFLAGS
 
 ENV BUILD_TYPE=${BUILD_TYPE}
 ENV REBUILD=false
-ENV HEALTHCHECK_ENDPOINT=http://localhost:8080/readyz
+# ENV HEALTHCHECK_ENDPOINT=http://localhost:8080/readyz
 ENV MAKEFLAGS=${MAKEFLAGS}
 
 ARG CUDA_MAJOR_VERSION=12
@@ -490,8 +490,8 @@ RUN if [[ ( "${EXTRA_BACKENDS}" =~ "vllm" || -z "${EXTRA_BACKENDS}" ) && "$IMAGE
 RUN mkdir -p /build/models
 
 # Define the health check command
-HEALTHCHECK --interval=1m --timeout=10m --retries=10 \
-  CMD curl -f ${HEALTHCHECK_ENDPOINT} || exit 1
+# HEALTHCHECK --interval=1m --timeout=10m --retries=10 \
+#  CMD curl -f ${HEALTHCHECK_ENDPOINT} || exit 1
 
 VOLUME /build/models
 EXPOSE 8080
