@@ -1,0 +1,33 @@
+Language,Code,Model Type,Full Path
+Multilingual,multi,XTTS v2,tts_models/multilingual/multi-dataset/xtts_v2
+Multilingual,multi,XTTS v1.1,tts_models/multilingual/multi-dataset/xtts_v1.1
+Multilingual,multi,YourTTS,tts_models/multilingual/multi-dataset/your_tts
+Multilingual,multi,Bark,tts_models/multilingual/multi-dataset/bark
+Bulgarian,bg,VITS,tts_models/bg/cv/vits
+Czech,cs,VITS,tts_models/cs/cv/vits
+Danish,da,VITS,tts_models/da/cv/vits
+Estonian,et,VITS,tts_models/et/cv/vits
+Irish,ga,VITS,tts_models/ga/cv/vits
+English,en,VITS,tts_models/en/ljspeech/vits
+English,en,Fast-Pitch,tts_models/en/ljspeech/fast_pitch
+English,en,VITS-VCTK,tts_models/en/vctk/vits
+English,en,Tortoise v2,tts_models/en/multi-dataset/tortoise-v2
+English,en,Jenny,tts_models/en/jenny/jenny
+Spanish,es,VITS,tts_models/es/css10/vits
+French,fr,VITS,tts_models/fr/css10/vits
+Ukrainian,uk,VITS,tts_models/uk/mai/vits
+Chinese,zh-CN,Tacotron2,tts_models/zh-CN/baker/tacotron2-DDC-GST
+Dutch,nl,VITS,tts_models/nl/css10/vits
+German,de,VITS,tts_models/de/thorsten/vits
+Japanese,ja,Tacotron2,tts_models/ja/kokoro/tacotron2-DDC
+Turkish,tr,Glow-TTS,tts_models/tr/common-voice/glow-tts
+Italian,it,VITS (Female),tts_models/it/mai_female/vits
+Italian,it,VITS (Male),tts_models/it/mai_male/vits
+Hungarian,hu,VITS,tts_models/hu/css10/vits
+Greek,el,VITS,tts_models/el/cv/vits
+Finnish,fi,VITS,tts_models/fi/css10/vits
+Polish,pl,VITS (Female),tts_models/pl/mai_female/vits
+Portuguese,pt,VITS,tts_models/pt/cv/vits
+Romanian,ro,VITS,tts_models/ro/cv/vits
+Bengali,bn,VITS (Male),tts_models/bn/custom/vits-male
+Bengali,bn,VITS (Female),tts_models/bn/custom/vits-female

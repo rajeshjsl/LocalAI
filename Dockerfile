@@ -320,7 +320,7 @@ COPY --from=grpc /opt/grpc /usr/local
 WORKDIR /build
 
 COPY . .
-COPY .git .
+# COPY .git .
 
 RUN make prepare
 
@@ -389,7 +389,7 @@ ARG MAKEFLAGS
 
 ENV BUILD_TYPE=${BUILD_TYPE}
 ENV REBUILD=false
-ENV HEALTHCHECK_ENDPOINT=http://localhost:8080/readyz
+# ENV HEALTHCHECK_ENDPOINT=http://localhost:8080/readyz
 ENV MAKEFLAGS=${MAKEFLAGS}
 
 ARG CUDA_MAJOR_VERSION=12
@@ -405,6 +405,13 @@ RUN if [ "${FFMPEG}" = "true" ]; then \
         apt-get clean && \
         rm -rf /var/lib/apt/lists/* \
     ; fi
+
+# Add curl for health checks
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        curl && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build
 
@@ -463,10 +470,10 @@ RUN if [[ ( "${EXTRA_BACKENDS}" =~ "vall-e-x" || -z "${EXTRA_BACKENDS}" ) && "$I
         make -C backend/python/transformers \
     ; fi
 
-RUN if [[ ( "${EXTRA_BACKENDS}" =~ "vllm" || -z "${EXTRA_BACKENDS}" ) && "$IMAGE_TYPE" == "extras" ]]; then \
+RUN if [[ ( "${EXTRA_BACKENDS}" =~ "vllm" || -z "${EXTRA_BACKENDS}" ) && "$IMAGE_TYPE" == "extras" && "$TARGETARCH" != "arm64" ]]; then \
         make -C backend/python/vllm \
     ; fi && \
-    if [[ ( "${EXTRA_BACKENDS}" =~ "autogptq" || -z "${EXTRA_BACKENDS}" ) && "$IMAGE_TYPE" == "extras" ]]; then \
+    if [[ ( "${EXTRA_BACKENDS}" =~ "autogptq" || -z "${EXTRA_BACKENDS}" ) && "$IMAGE_TYPE" == "extras" && "$TARGETARCH" != "arm64" ]]; then \
         make -C backend/python/autogptq \
     ; fi && \
     if [[ ( "${EXTRA_BACKENDS}" =~ "bark" || -z "${EXTRA_BACKENDS}" ) && "$IMAGE_TYPE" == "extras" ]]; then \
@@ -483,8 +490,8 @@ RUN if [[ ( "${EXTRA_BACKENDS}" =~ "vllm" || -z "${EXTRA_BACKENDS}" ) && "$IMAGE
 RUN mkdir -p /build/models
 
 # Define the health check command
-HEALTHCHECK --interval=1m --timeout=10m --retries=10 \
-  CMD curl -f ${HEALTHCHECK_ENDPOINT} || exit 1
+# HEALTHCHECK --interval=1m --timeout=10m --retries=10 \
+#  CMD curl -f ${HEALTHCHECK_ENDPOINT} || exit 1
 
 VOLUME /build/models
 EXPOSE 8080
